@@ -1,6 +1,8 @@
 <script setup>
-  const date = '2025-09-01T00:00:00+00:00';
-  const d = new Date(date);
+import {convertFormattedDateToTimeStamp, isValidDateFormattedString} from "@lib/unix-timestamp-converter.js";
+import {computed, reactive, ref} from "vue";
+
+  const df = ref('1970-01-01T00:00:00+00:00');
   const methods = [
     'getFullYear',
     'getMonth',
@@ -29,16 +31,39 @@
     'toTimeString',
     'toUTCString',
   ];
-  const data = {};
+
+  const dataPlain = {};
   methods.map(m => {
-    data[m] = d[m]();
+    dataPlain[m] = '';
   });
+  const data = reactive({...dataPlain});
+  function setBlank(){
+    methods.map(m => {
+      data[m] = '';
+    });
+  }
+  function update(){
+    let d = new Date(df.value);
+    methods.map(m => {
+      data[m] = d[m]();
+    });
+  }
+  function onInput(e){
+    let newD = e.target.value;
+    df.value = newD;
+    if(!convertFormattedDateToTimeStamp(newD)){
+      setBlank();
+      return;
+    }
+    update();
+  }
+  update();
 </script>
 
 <template>
-  <input :value="date">
+  <input :value="df" @input="onInput">
   <table>
-    <tr v-for="(v,m) in data">
+    <tr v-for="(v,m) in data" :key="m">
       <td v-html="m"></td>
       <td v-html="v"></td>
     </tr>
