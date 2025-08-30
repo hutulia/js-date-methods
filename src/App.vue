@@ -86,7 +86,7 @@ import {computed, reactive, ref} from "vue";
   }
   body{
     font-family: monospace;
-    background-color: lightgray;
+    background-color: #ebebeb;
   }
   .a4{
     width: 210mm;
