@@ -61,13 +61,70 @@ import {computed, reactive, ref} from "vue";
 </script>
 
 <template>
-  <input :value="df" @input="onInput">
-  <table>
-    <tr v-for="(v,m) in data" :key="m">
-      <td v-html="m"></td>
-      <td v-html="v"></td>
-    </tr>
-  </table>
+  <div class="a4-wrapper">
+    <div class="a4">
+      <input :value="df" @input="onInput">
+    </div>
+  </div>
+
+  <div class="a4-wrapper">
+    <div class="a4">
+      <div class="methods">
+        <div class="method" v-for="(v,m) in data" :key="m">
+          <div class="name" v-html="m"></div>
+          <div class="value" v-html="v"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<style scoped></style>
+<style>
+  html, body{
+    margin: 0;
+    padding: 0;
+  }
+  body{
+    font-family: monospace;
+    background-color: lightgray;
+  }
+  .a4{
+    width: 210mm;
+    max-width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 2mm;
+  }
+  .a4-wrapper{
+    margin: 2mm;
+  }
+  input{
+    font-size: 7mm;
+    padding: 4mm;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 2mm;
+    outline: none;
+    border: none;
+  }
+  .methods{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2mm;
+    gap: 4mm;
+    padding: 10mm;
+  }
+  .method{
+    display: flex;
+    flex-direction: row;
+    font-size: 3.5mm;
+    width: 100%
+  }
+  .method .name{
+    width: 12em;
+    max-width: 50%;
+  }
+  .method .value{
+    max-width: 50%;
+  }
+</style>
